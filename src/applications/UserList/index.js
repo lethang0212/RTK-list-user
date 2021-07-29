@@ -1,36 +1,35 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../store/slice";
-import { UserItem } from "./UserItem.js";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../store/actions";
+import { User } from "./User";
 
 export function UserList() {
-  const userLists = useSelector(selectUser);
+  const users = useSelector((state) => state.userIds);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getUsers(dispatch);
+  }, [dispatch]);
+
   return (
-    <div>
-      <h2>Table List</h2>
+    <>
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">Name</th>
-            <th scope="col">Action</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {userLists.map((user) => (
-            <tr key={user.id}>
-              <th>{user.id}</th>
-              <th>{user.emailUser}</th>
-              <th>{user.nameUser}</th>
-              <th>
-                {" "}
-                <UserItem id={user.id} />{" "}
-              </th>
+          {users.map((user) => (
+            <tr key={user}>
+              <User id={user} />
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }

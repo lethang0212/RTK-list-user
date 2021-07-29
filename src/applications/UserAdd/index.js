@@ -1,55 +1,45 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getUser } from "../store/slice";
+import { createUser } from "../../store/actions";
 
 export function UserAdd() {
+  const [nameInput, setNameInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
+
   const handleSubmit = () => {
-    dispatch(getUser({ email: email, name: name }));
+    createUser({ name: nameInput, email: emailInput }, dispatch);
   };
 
   return (
-    <div>
-      <h2>Add User</h2>
+    <>
       <form>
         <div className="form-group">
-          <label>
-            <b>Email</b>
-          </label>
+          <label>Email</label>
           <input
             type="email"
             className="form-control"
             placeholder="Enter email"
-            onChange={handleChangeEmail}
+            onChange={(e) => setEmailInput(e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label>
-            <b>Name</b>
-          </label>
+          <label>Name</label>
           <input
             type="text"
             className="form-control"
             placeholder="Enter name"
-            onChange={handleChangeName}
+            onChange={(e) => setNameInput(e.target.value)}
           />
         </div>
         <button
           type="button"
-          className="btn btn-success"
+          className="btn btn-primary"
           onClick={handleSubmit}
         >
-          Submit
+          Add New User
         </button>
       </form>
-    </div>
+    </>
   );
 }

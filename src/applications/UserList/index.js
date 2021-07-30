@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../store/actions";
+import { getUsers } from "../store/actions";
 import { User } from "./User";
 
 export function UserList() {
-  const users = useSelector((state) => state.userIds);
+  const userIds = useSelector((state) => state.users.userIds);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getUsers(dispatch);
+    dispatch(getUsers());
   }, [dispatch]);
-
   return (
     <>
       <table className="table">
@@ -23,11 +22,15 @@ export function UserList() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user}>
-              <User id={user} />
-            </tr>
-          ))}
+          {userIds.map((userId) => {
+            return (
+              <>
+                <tr key={userId}>
+                  <User id={userId} />
+                </tr>
+              </>
+            );
+          })}
         </tbody>
       </table>
     </>

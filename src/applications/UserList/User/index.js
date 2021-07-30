@@ -1,11 +1,14 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser } from "../../../store/actions";
+import { deleteUser } from "../../store/actions";
 
 export function User(props) {
   const { id } = props;
-  const userById = useSelector((state) => state.usersById[id]);
+  const userById = useSelector((state) => state.users.usersById[id]);
   const dispatch = useDispatch();
+  const handleEdit = () => {
+      
+  }
+
   if (userById !== undefined) {
     return (
       <>
@@ -13,7 +16,8 @@ export function User(props) {
         <td>{userById.name}</td>
         <td>{userById.email}</td>
         <td>
-          <button onClick={() => deleteUser(id, dispatch)}>Delete</button>
+          <button onClick={() => dispatch(deleteUser(id))}>Delete</button>
+          <button onClick={handleEdit}>Edit</button>
         </td>
       </>
     );

@@ -1,24 +1,33 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createUser } from "../store/actions";
+import { editUser } from "../store/actions";
 
-export function UserAdd() {
+export function UserEdit() {
   const [nameInput, setNameInput] = useState("");
   const [emailInput, setEmailInput] = useState("");
+  const [idInput, setIdInput] = useState();
   const dispatch = useDispatch();
-
   const handleSubmit = () => {
-    dispatch(createUser({ name: nameInput, email: emailInput }));
+    dispatch(
+      editUser(idInput, { id: idInput, name: nameInput, email: emailInput })
+    );
   };
-
   return (
     <>
       <form>
-        <h3>Create new user</h3>
         <div className="form-group">
-          <label>
-            <b>Email</b>
-          </label>
+          <h3>Edit user {}</h3>
+          <label><b>Id</b></label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter id"
+            onChange={(e) => setIdInput(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <h3>Edit user {}</h3>
+          <label><b>Email</b></label>
           <input
             type="email"
             className="form-control"
@@ -27,9 +36,7 @@ export function UserAdd() {
           />
         </div>
         <div className="form-group">
-          <label>
-            <b>Name</b>
-          </label>
+          <label><b>Name</b></label>
           <input
             type="text"
             className="form-control"
@@ -42,7 +49,7 @@ export function UserAdd() {
           className="btn btn-primary"
           onClick={handleSubmit}
         >
-          Add New User
+          Edit
         </button>
       </form>
     </>
